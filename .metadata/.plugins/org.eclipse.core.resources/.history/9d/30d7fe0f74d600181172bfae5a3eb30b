@@ -1,9 +1,0 @@
-package com.preety.rest.webservices.springbootwebservice.user;
-
-public class UserNotFoundException extends Exception {
-
-	public UserNotFoundException(String string) {
-		
-	}
-
-}

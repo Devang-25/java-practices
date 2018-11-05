@@ -1,6 +1,0 @@
-package com.preety.chessboard.domain;
-
-public enum Color{
-	W("W"), //white
-	B("B"); //black
-}
