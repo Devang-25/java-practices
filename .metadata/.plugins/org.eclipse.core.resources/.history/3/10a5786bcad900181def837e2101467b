@@ -1,0 +1,18 @@
+package com.preety.chessboard;
+
+
+import com.preety.chessboard.domain.Piece;
+import com.preety.chessboard.domain.Position;
+import com.preety.chessboard.domain.Color;
+import com.preety.chessboard.domain.Queen;
+
+public class Application {
+
+	public static void main(String[] args) {
+		Piece pc= new Queen(Color.W);
+		Position start= new Position(7, 1);
+		Position end= new Position(5,0);
+		pc.move(start, end);
+	}
+
+}

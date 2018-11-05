@@ -1,0 +1,52 @@
+package com.preety.chessboard.domain;
+
+public class Piece {
+	private Color color; 
+	private PieceType piece;
+
+	public Piece(Color color, PieceType piece) {
+		super();
+		this.color = color;
+		this.piece = piece;
+	}
+	
+
+	public Color getColor() {
+		return color;
+	}
+
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+
+	public PieceType getPiece() {
+		return piece;
+	}
+
+
+	public void setPiece(PieceType piece) {
+		this.piece = piece;
+	}
+
+
+	public void move(Position start, Position end) {
+		System.out.println("move from " + start + " to end " + end);
+	}
+
+}
+
+enum Color{
+	W, //white
+	B; //black
+}
+
+enum PieceType{
+	R, //Rook
+	B, //Bishop
+	H, //Horse
+	K, //King
+	Q, // Queen
+	P; //Pawn
+}

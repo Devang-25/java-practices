@@ -1,0 +1,6 @@
+package com.preety.chessboard.domain;
+
+enum Color{
+	W, //white
+	B; //black
+}

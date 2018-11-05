@@ -1,0 +1,23 @@
+package com.preety.chessboard.domain;
+
+public abstract class Piece {
+	private Color color; 
+	private PieceType piece;
+	
+	public abstract void move(Position start, Position end);
+
+}
+
+enum Color{
+	W, //white
+	B; //black
+}
+
+enum PieceType{
+	R, //Rook
+	B, //Bishop
+	H, //Horse
+	K, //King
+	Q, // Queen
+	P; //Pawn
+}

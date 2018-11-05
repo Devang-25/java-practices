@@ -1,0 +1,5 @@
+package com.elasticsearch;
+
+public class ServerSocket {
+
+}

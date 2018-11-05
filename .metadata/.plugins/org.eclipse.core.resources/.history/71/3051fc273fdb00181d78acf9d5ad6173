@@ -1,0 +1,25 @@
+package com.preety.rest.webservices.fileapis.util;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class UtilLargeDataInput {
+
+	public static void main(String args[]) {
+		String pathname = "";
+		try (BufferedReader in = new BufferedReader(new FileReader(pathname))) {
+			String line;
+			while ((line = in.readLine()) != null) {
+				System.out.println(line);
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

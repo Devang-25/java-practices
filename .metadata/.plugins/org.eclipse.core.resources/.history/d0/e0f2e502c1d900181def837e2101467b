@@ -1,0 +1,16 @@
+package com.preety.chessboard;
+
+import java.awt.MultipleGradientPaint.ColorSpaceType;
+
+import com.preety.chessboard.domain.Piece;
+import com.preety.chessboard.domain.Color;
+import com.preety.chessboard.domain.Queen;
+
+public class Application {
+
+	public static void main(String[] args) {
+		Piece pc= new Queen(Color.)
+
+	}
+
+}

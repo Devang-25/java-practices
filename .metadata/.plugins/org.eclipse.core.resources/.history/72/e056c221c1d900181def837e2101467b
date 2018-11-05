@@ -1,0 +1,10 @@
+package com.preety.chessboard.domain;
+
+enum PieceType{
+	R, //Rook
+	B, //Bishop
+	H, //Horse
+	K, //King
+	Q, // Queen
+	P; //Pawn
+}

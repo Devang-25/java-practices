@@ -1,0 +1,165 @@
+package com.elasticsearch.winterbe;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+/*
+ * how to execute code in parallel via threads, tasks and executor services.
+ */
+public class Concurrency1 {
+	/*
+	 * All modern operating systems support concurrency both via processes and
+	 * threads. Processes are instances of programs which typically run independent
+	 * to each other, e.g. if you start a java program the operating system spawns a
+	 * new process which runs in parallel to other programs. Inside those processes
+	 * we can utilize threads to execute code concurrently, so we can make the most
+	 * out of the available cores of the CPU.
+	 * 
+	 * Before starting a new thread you have to specify the code to be executed by
+	 * this thread, often called the task. This is done by implementing Runnable - a
+	 * functional interface defining a single void no-args method run() as
+	 * demonstrated in the following example:
+	 * 
+	 * 
+	 * Due to concurrent execution we cannot predict if the runnable will be invoked
+	 * before or after printing 'done'. The order is non-deterministic, thus making
+	 * concurrent programming a complex task in larger applications.
+	 * 
+	 * TimeUnit is a useful enum for working with units of time.
+	 */
+
+	public static void startThread() {
+
+		Runnable task = () -> {
+			String threadName = Thread.currentThread().getName();
+			System.out.println("Hello " + threadName);
+		};
+
+		task.run();
+
+		Thread thread = new Thread(task);
+		thread.start();
+
+		System.out.println("Done!");
+
+		Runnable runnable = () -> {
+			try {
+				String name = Thread.currentThread().getName();
+				System.out.println("Foo " + name);
+				TimeUnit.SECONDS.sleep(1);
+				System.out.println("Bar " + name);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		};
+
+		Thread t = new Thread(runnable);
+		t.start();
+
+	}
+
+	/*
+	 * Executors# The Concurrency API introduces the concept of an ExecutorService
+	 * as a higher level replacement for working with threads directly. Executors
+	 * are capable of running asynchronous tasks and typically manage a pool of
+	 * threads, so we don't have to create new threads manually. All threads of the
+	 * internal pool will be reused under the hood for revenant tasks, so we can run
+	 * as many concurrent tasks as we want throughout the life-cycle of our
+	 * application with a single executor service.
+	 * 
+	 * This is how the first thread-example looks like using executors:
+	 * 
+	 * An ExecutorService provides two methods to stop exectorservice: shutdown()
+	 * stop taking new tasks but let current running task to complete.
+	 * 
+	 * shutdownNow() interrupts all running tasks and shut the executor down
+	 * immediately.
+	 * 
+	 * awaitTermination wait for the given period to timeout if any running task.
+	 * After a maximum of given timee the executor finally shuts down by
+	 * interrupting all running tasks.
+	 */
+	public static void executors() {
+
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		executor.submit(() -> {
+			String threadName = Thread.currentThread().getName();
+			System.out.println("Hello " + threadName);
+		});
+		try {
+			System.out.println("attempt to shutdown executor");
+			executor.shutdown();
+			executor.awaitTermination(5, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			System.err.println("tasks interrupted");
+		} finally {
+			if (!executor.isTerminated()) {
+				System.err.println("cancel non-finished tasks");
+			}
+			executor.shutdownNow();
+			System.out.println("shutdown finished");
+		}
+
+	}
+
+	/*
+	 * Callables and Futures#
+	 * 
+	 * In addition to Runnable executors support another kind of task named
+	 * Callable. Callables are functional interfaces just like runnables but instead
+	 * of being void they return a value.
+	 * 
+	 * This lambda expression defines a callable returning an integer after sleeping
+	 * for one second:
+	 * 
+	 * submit() doesn't wait until the task completes, the executor service cannot
+	 * return the result of the callable directly. Instead the executor returns a
+	 * special result of type Future which can be used to retrieve the actual result
+	 * at a later point in time.
+	 * 
+	 * After submitting the callable to the executor we first check if the future
+	 * has already been finished execution via isDone().
+	 * 
+	 * Calling the method get() blocks the current thread and waits until the
+	 * callable completes before returning the actual result.
+	 * 
+	 */
+	public static void callablesAndFutures() {
+
+		Callable<Integer> task = () -> {
+			try {
+				TimeUnit.SECONDS.sleep(1);
+				return 123;
+			} catch (InterruptedException e) {
+				throw new IllegalStateException("task interrupted", e);
+			}
+		};
+		
+		ExecutorService executor = Executors.newFixedThreadPool(1);
+		Future<Integer> future = executor.submit(task);
+
+		System.out.println("future done? " + future.isDone());
+
+		Integer result = null;
+		try {
+			result = future.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("future done? " + future.isDone());
+		System.out.print("result: " + result);
+	}
+
+	public static void main(String args[]) {
+		executors();
+	}
+}

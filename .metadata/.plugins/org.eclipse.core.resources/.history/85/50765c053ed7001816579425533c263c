@@ -1,0 +1,5 @@
+package com.preety.rest.webservices.springbootwebservice;
+
+public class SwaggerConfig {
+
+}

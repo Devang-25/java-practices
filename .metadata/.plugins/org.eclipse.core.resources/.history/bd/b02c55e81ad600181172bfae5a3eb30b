@@ -1,0 +1,25 @@
+package com.preety.rest.webservices.springbootwebservice.user;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class UserResource {
+
+	@Autowired
+	private UserDaoService userservice;
+	// retrieve all users
+	@GetMapping(path="/users")
+	public List<User> getAllUsers(){
+		return userservice.findAll();
+	}
+	
+	//retrieve one user
+	@GetMapping(path="/users/{id}")
+	public User getUserById(int id) {
+		return userservice.findOne(id);
+	}
+}

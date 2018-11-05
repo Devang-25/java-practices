@@ -1,0 +1,12 @@
+package com.preety.rest.webservices.fileapis.util;
+
+public class Transaction {
+
+	public static final Object GROCERY = "grocery";
+
+	public Object getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

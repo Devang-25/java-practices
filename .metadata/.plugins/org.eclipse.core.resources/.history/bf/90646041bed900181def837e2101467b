@@ -1,0 +1,7 @@
+package com.preety.chessboard.domain;
+
+public abstract class ChessPiece {
+	
+	public void move(Position start, Position end):
+
+}

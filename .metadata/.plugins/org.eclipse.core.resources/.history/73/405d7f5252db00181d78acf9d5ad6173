@@ -1,0 +1,72 @@
+package com.preety.rest.webservices.fileapis.util;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class UtilLargeDataInput {
+	
+	public static void readFromFileLineByLine(String pathname) {
+		try (BufferedReader in = new BufferedReader(new FileReader(pathname))) {
+			String line;
+			while ((line = in.readLine()) != null) {
+				System.out.println(line);
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void readStreamFromFile(String pathname) {
+		try {
+			List<String> alist = Files.lines(Paths.get(pathname))
+				    .filter(line -> line.contains("abc"))
+				    .collect(Collectors.toList());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void readStreamFromSysInput() {
+		int numberOfLinesToBeRead=4;
+		System.out.println("input data");
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			in.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Stream<String> stream = in.lines().limit(numberOfLinesToBeRead);
+		stream.map(UtilLargeDataInput::doSOmething);
+	}
+	
+	public static String doSOmething(String s) {
+		//reverse
+		char[] charstr= s.toCharArray();
+		int n= s.length();
+		for(int i=0; i< n/2; i++) {
+			charstr[i]= charstr[n-1-i];
+		}
+		s= String.valueOf(charstr);
+		return s;
+	}
+
+	public static void main(String args[]) {
+		String pathname = "";
+		readStreamFromSysInput();
+	}
+
+}

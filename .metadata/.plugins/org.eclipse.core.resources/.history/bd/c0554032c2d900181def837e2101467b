@@ -1,0 +1,18 @@
+package com.preety.chessboard.domain;
+
+public class Queen extends Piece{
+	private Color color; 
+	private final PieceType piece= PieceType.Q;
+	
+	public Queen(Color color) {
+		super(color, piece);
+		this.color = color;
+	}
+
+	@Override
+	public void move(Position start, Position end) {
+		System.out.println(new Queen(Color.W).getPiece());
+		System.out.println(new Queen(Color.W).getColor());
+	}
+
+}

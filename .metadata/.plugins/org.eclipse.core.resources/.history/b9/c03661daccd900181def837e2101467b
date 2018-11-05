@@ -1,0 +1,23 @@
+package com.preety.chessboard.domain;
+
+public enum Color{
+	W("W"), //white
+	B("B"); //black
+	
+	 private final String text;
+
+	    /**
+	     * @param text
+	     */
+	    Strings(final String text) {
+	        this.text = text;
+	    }
+
+	    /* (non-Javadoc)
+	     * @see java.lang.Enum#toString()
+	     */
+	    @Override
+	    public String toString() {
+	        return text;
+	    }
+}

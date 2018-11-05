@@ -1,0 +1,5 @@
+package com.preety.chessboard.domain;
+
+public class Queen {
+
+}

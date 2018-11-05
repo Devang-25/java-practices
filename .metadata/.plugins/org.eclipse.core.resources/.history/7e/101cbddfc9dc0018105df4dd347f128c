@@ -1,0 +1,6 @@
+package com.elasticsearch.domain;
+
+@Document
+public class bus {
+
+}
