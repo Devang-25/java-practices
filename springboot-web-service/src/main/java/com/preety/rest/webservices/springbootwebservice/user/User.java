@@ -1,10 +1,14 @@
 package com.preety.rest.webservices.springbootwebservice.user;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -32,12 +36,29 @@ public class User {
 	@ApiModelProperty(notes="Birth date can not be in past")
 	private Date birthDate;
 	
+	@Temporal(TemporalType.DATE)
+	private Date utilDate;
+
+	@Temporal(TemporalType.TIME)
+	private Date utilTime;
+	
+	@OneToMany(mappedBy="user")
+	List<Post> posts;
+	
 	protected User() {}
 	public User(Integer id, String name, Date birthDate) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.birthDate = birthDate;
+	}
+	
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 	public Integer getId() {
 		return id;
@@ -56,6 +77,19 @@ public class User {
 	}
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+	
+	public Date getUtilDate() {
+		return utilDate;
+	}
+	public void setUtilDate(Date utilDate) {
+		this.utilDate = utilDate;
+	}
+	public Date getUtilTime() {
+		return utilTime;
+	}
+	public void setUtilTime(Date utilTime) {
+		this.utilTime = utilTime;
 	}
 	@Override
 	public String toString() {
