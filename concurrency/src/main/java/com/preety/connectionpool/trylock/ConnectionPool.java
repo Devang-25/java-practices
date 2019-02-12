@@ -21,7 +21,7 @@ public class ConnectionPool {
 	private Lock lock = new ReentrantLock();
 
 	private ConnectionPool() throws SQLException {
-		int ic = poolSize * 3 / 4 + 1;
+		int ic = poolSize * 4/3 + 1;
 		availableConnections = new ArrayList<Connection>(ic);
 		usedConnections = new ArrayList<Connection>(ic);
 		for (int i = 0; i <= poolSize; i++) {
